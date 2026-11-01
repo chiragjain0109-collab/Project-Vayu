@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Vayu Portal</title>
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --card-dark: #131c2e;
+            --accent-green: #10b981;
+            --accent-red: #ef4444;
+            --accent-blue: #3b82f6;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
+            --border-color: #1e293b;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            padding: 30px 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            width: 100%;
+            max-width: 1200px;
+        }
+
+        header h1 {
+            color: #fff;
+            font-size: 2rem;
+            letter-spacing: 2px;
+            font-weight: 800;
+        }
+
+        header h1 span {
+            color: var(--accent-green);
+        }
+
+        .main-container {
+            display: flex;
+            gap: 30px;
+            max-width: 1200px;
+            width: 100%;
+            justify-content: center;
+            align-items: stretch;
+            flex-wrap: wrap;
+        }
+
+        /* VAYU CITIZEN APP MOBILE FRAME */
+        .phone-container {
+            background: #000;
+            padding: 12px;
+            border-radius: 45px;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.8);
+            border: 3px solid #334155;
+            width: 360px;
+            height: 720px;
+        }
+
+        .phone-screen {
+            background: #0b0f19;
+            border-radius: 35px;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .phone-navbar {
+            padding: 18px 20px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: #0d1322;
+        }
+
+        .phone-app-brand {
+            font-weight: 800;
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            color: var(--text-main);
+        }
+
+        .phone-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        /* APP MODULE CARDS */
+        .app-card {
+            background: var(--card-dark);
+            border-radius: 14px;
+            padding: 15px;
+            border: 1px solid var(--border-color);
+        }
+
+        .aqi-panel {
+            text-align: center;
+            background: linear-gradient(180deg, #131c2e 0%, #0d1322 100%);
+        }
+
+        .aqi-number {
+            font-size: 3.2rem;
+            font-weight: 900;
+            margin: 2px 0;
+            color: var(--accent-green);
+            transition: color 0.3s ease;
+        }
+
+        .aqi-label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+        }
+
+        /* SMART HOME CONTROL GRID */
+        .smarthome-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .node-status {
+            background: #0b0f19;
+            padding: 10px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .indicator-bulb {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--accent-green);
+            transition: background 0.3s;
+        }
+
+        .indicator-bulb.pulsing {
+            animation: beacon 1.2s infinite;
+        }
+
+        /* SWITCHABLE COMMUTER NAVIGATION */
+        .routing-switch {
+            display: flex;
+            background: #0b0f19;
+            border-radius: 8px;
+            padding: 3px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .switch-option {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .switch-option.selected {
+            background: var(--accent-green);
+            color: #fff;
+        }
+
+        .display-route-map {
+            height: 100px;
+            background: #162238;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 10px;
+            text-align: center;
+            border-left: 4px solid var(--accent-green);
+        }
+
+        /* CAMERA SECURE LOCK */
+        .camera-button {
+            width: 100%;
+            background: var(--accent-blue);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-top: 8px;
+            transition: background 0.2s;
+        }
+
+        .camera-button:hover {
+            background: #2563eb;
+        }
+
+        /* WALLET CARD */
+        .wallet-card {
+            background: linear-gradient(135deg, #0f766e, #115e59);
+            border-radius: 14px;
+            padding: 15px;
+            position: relative;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* VAYU TASK FORCE CENTRAL CONTROL NETWORK */
+        .dashboard-container {
+            flex: 1;
+            min-width: 450px;
+            background: var(--card-dark);
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .panel-header {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: #fff;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .system-action-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-trigger {
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 700;
+            cursor: pointer;
+            color: white;
+            font-size: 0.85rem;
+        }
+
+        .action-trigger.danger { background: var(--accent-red); }
+        .action-trigger.success { background: var(--accent-green); }
+
+        .system-card {
+            background: #0b0f19;
+            padding: 15px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-track-bg {
+            width: 100%;
+            height: 6px;
+            background: #1e293b;
+            border-radius: 3px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .progress-track-fill {
+            width: 0%;
+            height: 100%;
+            background: var(--accent-blue);
+            transition: width 0.3s ease;
+        }
+
+        /* REAL-TIME TELEMETRY LOG */
+        .telemetry-log {
+            background: #070a12;
+            border-radius: 10px;
+            padding: 15px;
+            height: 160px;
+            overflow-y: auto;
+            font-family: monospace;
+            font-size: 0.8rem;
+            color: #38bdf8;
+            border: 1px solid var(--border-color);
+        }
+
+        .log-line {
+            margin-bottom: 6px;
+            border-left: 2px solid var(--accent-blue);
+            padding-left: 8px;
+        }
+
+        @keyframes beacon {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.6; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>PROJECT <span>VAYU</span> CONTROL HUB</h1>
+    </header>
+
+    <div class="main-container">
+        
+        <!-- VAYU CITIZEN SYSTEM INTERFACE -->
+        <div class="phone-container">
+            <div class="phone-screen">
+                <div class="phone-navbar">
+                    <span class="phone-app-brand">VAYU CITIZEN</span>
+                    <span style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700;">LIVE CONNECTED</span>
+                </div>
+
+                <div class="phone-body">
+                    <!-- SYSTEM AQI SENSOR -->
+                    <div class="app-card aqi-panel" id="uiAqiBox">
+                        <div style="font-size: 0.75rem; color: var(--text-muted); font-weight: 700; letter-spacing: 0.5px;">LOCAL AMBIENT AQI</div>
+                        <div class="aqi-number" id="uiAqiVal">48</div>
+                        <div class="aqi-label" id="uiAqiText">GOOD / NORMAL</div>
+                    </div>
+
+                    <!-- SMART HOME ENCLOSURE INTERFACE -->
+                    <div class="app-card">
+                        <div style="font-size: 0.85rem; font-weight: 800; letter-spacing: 0.3px;">SmartEnclosure™ Domestic Sync</div>
+                        <div class="smarthome-grid">
